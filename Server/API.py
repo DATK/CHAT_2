@@ -40,7 +40,8 @@ def mesage(id):
         if data["type"] == "post":
             user = User(data["login"], data["password"])
             if user.chek_reg()[1]:
-                m = Messange(data["content"],user.usr["parm"]["name"] ,data["login"])
+                m = Messange(data["content"], user.usr["parm"]
+                             ["name"], data["login"])
                 s.set_mes(m)
                 if s.is_id():
                     if user.get_rules()["rules"]["WRITE"]:
@@ -49,8 +50,8 @@ def mesage(id):
                     else:
                         return "CanNotWrite"
                 else:
-                    if user.get_rules()["rules"]["CREATE"] and user.get_rules["rules"]["CREATE_NOW"]<user.get_rules["rules"]["CREATE_MAX"]:
-                        user.usr["rules"]["CREATE_NOW"]+=1
+                    if user.get_rules()["rules"]["CREATE"] and user.get_rules()["rules"]["CREATE_NOW"] < user.get_rules()["rules"]["CREATE_MAX"]:
+                        user.usr["rules"]["CREATE_NOW"] += 1
                         s.write()
                         return "Succses"
                     else:
@@ -71,16 +72,18 @@ def mesage(id):
             else:
                 return "NoThisUser"
 
+
 @app.route("/changes/users/who/", methods=post)
 def changes():
     if request.method == "POST":
         data = request.json
         user = User(data["login"], data["password"])
         if user.chek_reg()[1]:
-            return user.change_(data["rule"],data["znach"])
+            return user.change_(data["rule"], data["znach"])
         else:
             return "NoThisUser"
-        
+
+
 @app.route("/get_usr_name/shaudipfl/fds", methods=post)
 def get_user_name():
     if request.method == "POST":
