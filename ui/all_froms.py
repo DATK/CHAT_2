@@ -132,12 +132,11 @@ class MainForm(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
         self.set_parms()
         self.event_init_()
-        self.id="Main"
-        self.name=self.get_name()
-        
+        self.id = "Main"
+        self.name = self.get_name()
+
         self.smes = ["started"]
         self.timer = QTimer()
         self.timer.setInterval(1500)                    # Миллисекунды
@@ -152,7 +151,6 @@ class MainForm(object):
         self.login = tmp["login"]
         self.password = tmp["password"]
         self.name = tmp["name"]
-        
 
     def event_init_(self):
         self.sendMes_but.clicked.connect(lambda: self.send_message())
@@ -163,24 +161,23 @@ class MainForm(object):
 
     def change_name(self):
         js1 = {"login": self.login,
-               "password": self.password,"rule":"name","znach":self.Change_nameEdit.text()}
+               "password": self.password, "rule": "name", "znach": self.Change_nameEdit.text()}
         snd.chg(js1)
-        self.name=self.get_name()
-        
+        self.name = self.get_name()
+
     def change_password(self):
-        self.password=hash(self.Change_passwordEdit.text())
+        self.password = hash(self.Change_passwordEdit.text())
         js1 = {"login": self.login,
-               "password": self.password,"rule":"password","znach":self.password}
+               "password": self.password, "rule": "password", "znach": self.password}
         snd.chg(js1)
-    
 
     def change_ip(self):
-        ip=self.Change_ipEdit.text()
-        snd.ip_upd(ip)    
-                
+        ip = self.Change_ipEdit.text()
+        snd.ip_upd(ip)
+
     def change_id(self):
-        self.id=self.IDROOM.text()
-        
+        self.id = self.IDROOM.text()
+
     def send_message(self):
         text = sh(f"{self.name} - {self.PostEdit.text()}")
         js1 = {"type": "post", "login": self.login,
@@ -195,10 +192,10 @@ class MainForm(object):
         else:
             self.GetSmsEdit.append(txt)
             self.smes.append(txt)
-            
+
     def get_name(self):
         return snd.getname({"login": self.login,
-               "password": self.password})
+                            "password": self.password})
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -264,11 +261,10 @@ class Ui_MainForm(object):
         self.button_reg.clicked.connect(self.reg)
         self.button_vhod.clicked.connect(self.vhod)
 
-
     def reg(self):
         mes_box = QMessageBox()
         mes_box.setWindowTitle("Результат")
-        login = sh(self.Editlogin.text(),key=3)
+        login = self.Editlogin.text()
         password = hash(self.EditPassword.text())
         mes_box.setText(
             snd.reg({"login": login, "password": password, "name": "gust"}))
@@ -288,7 +284,7 @@ class Ui_MainForm(object):
     def vhod(self):
         mes_box = QMessageBox()
         mes_box.setWindowTitle("Результат")
-        login = sh(text=self.Editlogin.text(),key=3)
+        login = self.Editlogin.text()
         password = hash(self.EditPassword.text())
         res = snd.vhod({"login": login, "password": password})
         mes_box.setText(res)
