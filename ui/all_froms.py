@@ -136,7 +136,9 @@ class MainForm(object):
         self.event_init_()
         self.id = "Main"
         self.name = self.get_name()
-
+        self.keywords=["Succses","NoThisUser","HavingUsers","NoServerConnection","LoginOrPasswordIsUncorrect","CanNotWrite","NoThisRoom","CanNotRead"]
+        
+        
         self.smes = ["started"]
         self.timer = QTimer()
         self.timer.setInterval(1500)                    # Миллисекунды
@@ -185,8 +187,14 @@ class MainForm(object):
         snd.mes(self.id, js1)
 
     def get_messange(self):
-        txt = unsh(snd.mes(
-            self.id, {"type": "get", "login": self.login, "password": self.password}))
+        txt = snd.mes(
+            self.id, {"type": "get", "login": self.login, "password": self.password})
+        txt2=unsh(txt)
+        if txt in self.keywords:
+            txt2=txt
+        else:
+            txt=txt2
+        
         if txt == self.smes[-1]:
             pass
         else:

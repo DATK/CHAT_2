@@ -51,7 +51,7 @@ def mesage(id):
                         return "CanNotWrite"
                 else:
                     if user.get_rules()["rules"]["CREATE"] and user.get_rules()["rules"]["CREATE_NOW"] < user.get_rules()["rules"]["CREATE_MAX"]:
-                        user.usr["rules"]["CREATE_NOW"] += 1
+                        user.create_room()
                         s.write()
                         return "Succses"
                     else:
